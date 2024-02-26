@@ -1,0 +1,127 @@
+import tkinter as tk
+
+class Livro:
+    def __init__(self, titulo, autor, ID):
+        self.titulo = titulo
+        self.autor = autor
+        self.ID = ID
+        self.emprestar = False
+
+class Membro:
+    def __init__(self, nome, numero):
+        self.nome = nome
+        self.numero = numero
+        self.registro = []
+
+class Biblioteca:
+    def __init__(self):
+        self.catalogar = []
+        self.registro_membros = []
+
+    def adicionar_livro(self, livro):
+        self.catalogar.append(livro)
+
+    def adicionar_membro(self, membro):
+        self.registro_membros.append(membro)
+
+    def emprestar_livro(self, livro, membro):
+        if livro.empretar:
+            print("Este livro já está emprestado.")
+        else:
+            livro.empretar = True
+            membro.registro.append(livro)
+
+    def registrar_devolucao(self, livro, membro):
+        if livro in membro.registro:
+            livro.empretar = False
+            membro.registro.remove(livro)
+            print("Devolução registrada com sucesso.")
+        else:
+            print("Este livro não foi emprestado para este membro.")
+
+  
+
+def cadastrar_livro():
+    titulo = entry_titulo.get()
+    autor = entry_autor.get()
+    ID = int(entry_id.get())
+    livro = Livro(titulo, autor, ID)
+    biblioteca.adicionar_livro(livro)
+    print("Livro cadastrado")
+
+
+def cadastrar_membro():
+    nome = entry_nome.get()
+    numero = int(entry_numero.get())
+    membro = Membro(nome, numero)
+    biblioteca.adicionar_membro(membro)
+    print("Membro cadastrado")
+
+biblioteca = Biblioteca()
+
+projeto = tk.Tk()
+projeto.title("Cadastro de Livros e Membros")
+
+frame_livros = tk.Frame(projeto)
+frame_livros.pack(padx=10, pady=10, fill=tk.BOTH)
+
+label_titulo = tk.Label(frame_livros, text="Título:")
+label_titulo.grid(row=0, column=0)
+entry_titulo = tk.Entry(frame_livros)
+entry_titulo.grid(row=0, column=1)
+
+label_autor = tk.Label(frame_livros, text="Autor:")
+label_autor.grid(row=1, column=0)
+entry_autor = tk.Entry(frame_livros)
+entry_autor.grid(row=1, column=1)
+
+label_id = tk.Label(frame_livros, text="ID:")
+label_id.grid(row=2, column=0)
+entry_id = tk.Entry(frame_livros)
+entry_id.grid(row=2, column=1)
+
+button_cadastrar_livro = tk.Button(frame_livros, text="Cadastro Livro", command=cadastrar_livro)
+button_cadastrar_livro.grid(row=3, columnspan=2, pady=5)
+
+frame_membros = tk.Frame(projeto)
+frame_membros.pack(padx=10, pady=10, fill=tk.BOTH)
+
+label_nome = tk.Label(frame_membros, text="Nome:")
+label_nome.grid(row=0, column=0)
+entry_nome = tk.Entry(frame_membros)
+entry_nome.grid(row=0, column=1)
+
+label_numero = tk.Label(frame_membros, text="Número:")
+label_numero.grid(row=1, column=0)
+entry_numero = tk.Entry(frame_membros)
+entry_numero.grid(row=1, column=1)
+
+button_cadastrar_membro = tk.Button(frame_membros, text="Cadastro de Membro", command=cadastrar_membro)
+button_cadastrar_membro.grid(row=2, columnspan=2, pady=5)
+
+frame_pesquisa = tk.Frame(projeto)
+frame_pesquisa.pack(padx=10, pady=10, fill=tk.BOTH)
+
+label_pesquisa = tk.Label(frame_pesquisa, text="Pesquisar Livro:")
+label_pesquisa.grid(row=0, column=0)
+entry_pesquisa = tk.Entry(frame_pesquisa)
+entry_pesquisa.grid(row=0, column=1)
+
+button_pesquisar = tk.Button(frame_pesquisa, text="Pesquisar",)
+button_pesquisar.grid(row=0, column=2)
+
+button_registrar_revolucao = tk.Button(frame_pesquisa, text="Devolver Livro",)
+button_registrar_revolucao.grid(row=0, column=3)
+
+button_emprestar = tk.Button(frame_pesquisa, text="Emprestar Livro",)
+button_emprestar.grid(row=0, column=4)
+
+label_membro = tk.Label(frame_pesquisa,text="número do membro")
+label_membro.grid(row=0,column=5)
+entry_membro = tk.Entry(frame_pesquisa)
+entry_membro.grid(row=0,column=6)
+
+label_status = tk.Label(frame_pesquisa, text="")
+label_status.grid(row=2, columnspan=4)
+
+projeto.mainloop()
